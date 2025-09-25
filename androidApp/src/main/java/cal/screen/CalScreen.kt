@@ -22,18 +22,18 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
-import cal.viewmodel.CalculatorKeysList
 import cal.viewmodel.ItemsViewModel
 import cal.lazy.SimpleLazyColumn
 import cal.components.CustomTextDisplay
 import cal.components.LocalImageExample
+import cal.model.CalculatorKeysList
 import com.hathway.kmm_basic_app.android.R
 
 
 @Composable
 fun CalScreens(modifier: Modifier = Modifier) {
 
-    val viewModel = viewModel<ItemsViewModel>() // Explicit type
+    val viewModel = viewModel<ItemsViewModel>()
     val smallRes by viewModel.smallRes.collectAsState()
     val largeRes by viewModel.largeRes.collectAsState()
 
@@ -110,7 +110,7 @@ fun CalScreens(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun myD() {
+private fun PreviewCalScreens() {
     CalScreens()
 }
 

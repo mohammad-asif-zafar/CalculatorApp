@@ -51,7 +51,6 @@ fun CustomTextDisplay(
             // .padding(vertical = 60.dp), // 👈 INNER padding (inside the border, around text)
             color = Color.Transparent, shadowElevation = 0.dp
         ) {
-
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Bottom,
@@ -59,7 +58,7 @@ fun CustomTextDisplay(
             ) {
                 // Top text
                 Text(
-                    text = textSmall,//topText,
+                    text = textSmall,
                     fontSize = 25.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -69,7 +68,6 @@ fun CustomTextDisplay(
                         .align(Alignment.End) // use CenterHorizontally if you want centered
 
                 )
-
                 // Bottom text (dark & big)
                 Text(
                     text = textLarge,

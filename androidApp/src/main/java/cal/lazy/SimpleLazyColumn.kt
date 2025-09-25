@@ -19,8 +19,8 @@ import cal.keybroad.DigitItem
 import cal.keybroad.EqualsItem
 import cal.keybroad.OperatorItem
 import cal.model.CalculatorKey
+import cal.model.CalculatorKeysList
 import cal.model.KeyType
-import cal.viewmodel.CalculatorKeysList
 import cal.viewmodel.ItemsViewModel
 
 
