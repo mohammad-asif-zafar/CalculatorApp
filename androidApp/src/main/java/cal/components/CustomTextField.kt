@@ -35,7 +35,6 @@ fun CustomTextField(text: String, label: String, modifier :Modifier) {
         textStyle = androidx.compose.ui.text.TextStyle(fontSize = 18.sp), // custom font size
         modifier = modifier
             .padding(5.dp)
-
             .border(
                 width = 1.dp,
                 color = Color.Yellow,
