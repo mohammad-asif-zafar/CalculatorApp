@@ -41,23 +41,20 @@ class ItemsViewModel(private val repo: CalculationRepo = CalculationRepo()) : Vi
         println("BTN -> $item")
         when (item) {
 
+            CalculatorKeys.MODE -> {
+                _largeRes.value += item
+            }
             CalculatorKeys.ALL_CLEAR ->// AC
                 setTextField()
 
+            CalculatorKeys.DOT ->// AC
+                _largeRes.value += item
+
             CalculatorKeys.EQUALS -> {  // =
-                if (!f && op && s) {
-                    _smallRes.value = _largeRes.value
-                    _largeRes.value = repo.performCalculation(
-                        firstValue = firstValue.value,
-                        secondValue = secondValue.value,
-                        operator = currentOperator
-                    )
-                    firstValue.value = _largeRes.value.toString()
-                    op = false
-                    s = false
-                    secondValue.value = ""
-                    println("final :firstvalue:" + firstValue.value + "-second:" + secondValue.value)
-                }
+                _smallRes.value = _largeRes.value
+                _largeRes.value = repo.formatResult( // double tp int
+                    repo.performCalculationMultipleOperation(_largeRes.value).toDouble() // double
+                )
             }
             // +,-,*,/
             CalculatorKeys.PLUS, CalculatorKeys.MINUS, CalculatorKeys.MULTIPLY, CalculatorKeys.DIVIDE -> {

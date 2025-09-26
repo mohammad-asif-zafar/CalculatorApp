@@ -61,4 +61,5 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.constraintlayout.compose)
    implementation(libs.coil.compose)
+   implementation(libs.material.icons.extended)
 }

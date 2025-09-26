@@ -64,8 +64,8 @@ fun CalScreens(modifier: Modifier = Modifier) {
                     .fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
                     LocalImageExample(
                         onClick = { },
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = stringResource(id = R.string.back),
+                        imageVector = Icons.Filled.HistoryEdu,
+                        contentDescription = stringResource(id = R.string.history),
                         tintColor = Color.Gray,
                         size = 24.dp,
                     )

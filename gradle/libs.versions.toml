@@ -33,7 +33,7 @@ lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 lifecycle-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-
+material_icons_extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-material3" }
 
 # junit (classic)
 junit = { module = "junit:junit", version.ref = "junit" }
