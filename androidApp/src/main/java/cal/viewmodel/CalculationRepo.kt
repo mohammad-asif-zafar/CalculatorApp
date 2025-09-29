@@ -2,6 +2,10 @@ package cal.viewmodel
 
 import androidx.lifecycle.ViewModel
 import cal.constants.CalculatorKeys
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.util.Locale
+import kotlin.math.abs
 
 
 class CalculationRepo() : ViewModel() {
@@ -30,7 +34,7 @@ class CalculationRepo() : ViewModel() {
     }
 
     fun module(a: Double, b: Double): Double {
-        return  return a.mod(b)
+        return a.mod(b)
     }
 
 
@@ -72,7 +76,7 @@ class CalculationRepo() : ViewModel() {
 
         for (i in longCal.indices) {
             val ch: Char = longCal[i]
-            if (Character.isDigit(ch)|| ch == '.') {
+            if (Character.isDigit(ch) || ch == '.') {
                 number.append(ch)
             } else if (isOperator(ch)) {
                 if (result.isEmpty()) {
@@ -87,13 +91,20 @@ class CalculationRepo() : ViewModel() {
             }
 
         }
-        // last number
+        // Last number
         if (result.isEmpty()) {
-            result = number.toString();
+            result = number.toString()
         } else {
-            result = performCalculation(result, number.toString(), op);
+            result = performCalculation(result, number.toString(), op)
         }
-        return result
+
+        // ✅ Format result: 3 decimals max, max 9 digits
+        val numeric = result.toDoubleOrNull()
+        return if (numeric != null) {
+            formatResultOfDecimal(numeric)   // <-- uses the helper below
+        } else {
+            result
+        }
 
     }
 
@@ -108,6 +119,33 @@ class CalculationRepo() : ViewModel() {
             value.toInt().toString()   // remove .0
         } else {
             value.toString()           // keep decimal
+        }
+    }
+
+
+    fun formatResultOfDecimal(value: Double): String {
+        if (value.isNaN()) return "NaN"
+        if (value.isInfinite()) return if (value > 0) "Infinity" else "-Infinity"
+
+        val absVal = abs(value)
+
+        // Count digits in integer part
+        val integerPart = absVal.toLong()
+        val integerLength = integerPart.toString().length
+
+        // If integer part too long -> scientific notation
+        if (integerLength > 9) {
+            return String.format(Locale.US, "%.3e", value)
+        }
+
+        // Otherwise round to 3 decimal places
+        val bd = BigDecimal(value.toString()).setScale(3, RoundingMode.HALF_UP).stripTrailingZeros()
+
+        // If no fractional part -> show as int
+        return if (bd.scale() <= 0) {
+            bd.toBigInteger().toString()
+        } else {
+            bd.toPlainString()
         }
     }
 }

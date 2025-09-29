@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cal.viewmodel.ItemsViewModel
+import org.koin.androidx.compose.getViewModel
 import cal.lazy.SimpleLazyColumn
 import cal.components.CustomTextDisplay
 import cal.components.LocalImageExample
@@ -31,9 +31,9 @@ import com.hathway.kmm_basic_app.android.R
 
 
 @Composable
-fun CalScreens(modifier: Modifier = Modifier) {
+fun CalculatorScreen(onOpenHistory: () -> Unit) {
 
-    val viewModel = viewModel<ItemsViewModel>()
+    val viewModel = getViewModel<ItemsViewModel>()
     val smallRes by viewModel.smallRes.collectAsState()
     val largeRes by viewModel.largeRes.collectAsState()
 
@@ -63,7 +63,7 @@ fun CalScreens(modifier: Modifier = Modifier) {
                     }
                     .fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
                     LocalImageExample(
-                        onClick = { },
+                        onClick = { onOpenHistory() },
                         imageVector = Icons.Filled.HistoryEdu,
                         contentDescription = stringResource(id = R.string.history),
                         tintColor = Color.Gray,
@@ -81,9 +81,7 @@ fun CalScreens(modifier: Modifier = Modifier) {
 
                 ) {//2nd box
                 CustomTextDisplay(
-                    textSmall = smallRes.toString(),
-                    textLarge = largeRes.toString(),
-                    modifier = modifier.fillMaxSize()
+                    textSmall = smallRes.toString(), textLarge = largeRes.toString()
                 )
 
             }
@@ -97,7 +95,7 @@ fun CalScreens(modifier: Modifier = Modifier) {
             ) {
                 SimpleLazyColumn(
                     items = CalculatorKeysList.keys, onKeyClick = { item ->
-                        viewModel.buttonClickItem(item.label) // use .label for String
+                        viewModel.buttonClickItem(item.label)
                     })
             }
 
@@ -111,6 +109,9 @@ fun CalScreens(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun PreviewCalScreens() {
-    CalScreens()
+    CustomTextDisplay(
+        textSmall = "1223", textLarge = "12331"
+    )
+
 }
 

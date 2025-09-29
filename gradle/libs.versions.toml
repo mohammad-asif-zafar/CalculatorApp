@@ -1,43 +1,75 @@
 [versions]
 agp = "8.3.2"
 kotlin = "2.0.20"
-compose = "1.5.4"
-compose-material3 = "1.1.2"
-foundationDesktop = "1.7.0"
-junitJupiter = "5.8.1"
+
+# Compose
+compose = "1.5.4"             # used for ui/foundation
+compose-material3 = "1.1.2"   # material3
+compose-bom = "2024.09.01"    # BOM version, aligns Compose libs
+
+# AndroidX
 androidxActivity = "1.9.0"
 navigation = "2.7.7"
-kotlinx-coroutines = "1.7.3"
-# NEW
 lifecycle = "2.6.1"
-junit = "4.13.2"
 constraintlayout-compose = "1.0.1"
+
+# Misc
+foundationDesktop = "1.7.0"
 coil = "2.5.0"
+kotlinx-coroutines = "1.7.3"
+
+# Testing
+junit = "4.13.2"
+junitJupiter = "5.8.1"
+koin = "3.5.6"
+room = "2.6.1"
+
+# KAPT
+ksp = "2.0.20-1.0.24" # match your Kotlin 2.0.20
+
 
 [libraries]
+# Kotlin
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-# Compose core libs (unchanged)
+
+# Compose (aligned by BOM, except foundation-desktop)
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
-androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 compose-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "compose" }
-androidx-foundation-desktop = { group = "androidx.compose.foundation", name = "foundation-desktop", version.ref = "foundationDesktop" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
-# UPDATED lifecycle libs: use lifecycle version (not "compose")
+material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+
+# AndroidX
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-lifecycle-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
+constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
+
+# KOIN
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+# Desktop
+androidx-foundation-desktop = { module = "androidx.compose.foundation:foundation-desktop", version.ref = "foundationDesktop" }
+
+# Coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-material_icons_extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-material3" }
 
-# junit (classic)
+# Room
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+# Coroutines
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
+# Testing
 junit = { module = "junit:junit", version.ref = "junit" }
-
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -45,3 +77,4 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

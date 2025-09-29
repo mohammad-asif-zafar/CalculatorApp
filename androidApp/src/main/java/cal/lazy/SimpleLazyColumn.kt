@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import cal.keybroad.ClearItem
 import cal.keybroad.DefaultItem
 import cal.keybroad.DigitItem
@@ -21,7 +20,6 @@ import cal.keybroad.OperatorItem
 import cal.model.CalculatorKey
 import cal.model.CalculatorKeysList
 import cal.model.KeyType
-import cal.viewmodel.ItemsViewModel
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -53,9 +51,7 @@ fun SimpleLazyColumn(
 @Preview
 @Composable
 private fun PreviewSimpleLazyColumn() {
-    val viewModel = viewModel<ItemsViewModel>() // Explicit type
     SimpleLazyColumn(
         items = CalculatorKeysList.keys, onKeyClick = { item ->
-            viewModel.buttonClickItem(item.label) // use .label for String
         })
 }
