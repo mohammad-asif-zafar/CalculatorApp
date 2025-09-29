@@ -85,4 +85,5 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.junit.jupiter)
     testImplementation(kotlin("test"))
+    testImplementation(libs.kotlinx.coroutines.android.test)
 }

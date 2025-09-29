@@ -9,7 +9,7 @@ import kotlin.math.abs
 
 
 class CalculationRepo() : ViewModel() {
-    private val MAX_DIGITS = 10  // you can change this
+    private val MAX_DIGITS = 10
 
 
     fun add(firstNumber: Double, secondNumber: Double): Double {
