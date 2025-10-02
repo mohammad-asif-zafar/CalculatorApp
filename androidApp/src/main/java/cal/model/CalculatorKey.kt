@@ -5,5 +5,5 @@ data class CalculatorKey(
 )
 
 enum class KeyType {
-    DIGIT, OPERATOR, CLEAR, EQUALS, DOT, BRACKET, MODE
+    DIGIT, OPERATOR, CLEAR, EQUALS, DOT, BRACKET, MODE,SPECIAL_MODE,CLEAR_ITEM
 }

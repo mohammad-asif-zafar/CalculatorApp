@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.HistoryEdu
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,13 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import cal.viewmodel.ItemsViewModel
-import org.koin.androidx.compose.getViewModel
-import cal.lazy.SimpleLazyColumn
 import cal.components.CustomTextDisplay
 import cal.components.LocalImageExample
+import cal.lazy.SimpleLazyColumn
 import cal.model.CalculatorKeysList
+import cal.viewmodel.ItemsViewModel
 import com.hathway.kmm_basic_app.android.R
+import org.koin.androidx.compose.getViewModel
 
 
 @Composable
@@ -36,6 +36,9 @@ fun CalculatorScreen(onOpenHistory: () -> Unit) {
     val viewModel = getViewModel<ItemsViewModel>()
     val smallRes by viewModel.smallRes.collectAsState()
     val largeRes by viewModel.largeRes.collectAsState()
+
+
+
 
     Surface(
         color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()
@@ -46,7 +49,7 @@ fun CalculatorScreen(onOpenHistory: () -> Unit) {
             ConstraintLayout(
                 modifier = Modifier
                     .fillMaxSize()
-                    .weight(1.3f)
+                    .weight(.8f)
                     .background(Color(0xFFFFFFFF))
             ) {
                 val (topBox, iconRef) = createRefs()
@@ -74,7 +77,7 @@ fun CalculatorScreen(onOpenHistory: () -> Unit) {
 
             Box(
                 modifier = Modifier
-                    .weight(3f)
+                    .weight(2.5f)
                     .background(Color(0xFFFFFFFF))
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center,
@@ -88,14 +91,14 @@ fun CalculatorScreen(onOpenHistory: () -> Unit) {
 
             Box(
                 modifier = Modifier
-                    .weight(6f)
+                    .weight(7f)
                     .padding(top = 10.dp, bottom = 10.dp)
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
                 SimpleLazyColumn(
                     items = CalculatorKeysList.keys, onKeyClick = { item ->
-                        viewModel.buttonClickItem(item.label)
+                        viewModel.buttonClickItem(item)
                     })
             }
 
@@ -103,6 +106,7 @@ fun CalculatorScreen(onOpenHistory: () -> Unit) {
 
 
     }
+
 
 }
 

@@ -11,7 +11,6 @@ import kotlin.math.abs
 class CalculationRepo() : ViewModel() {
     private val MAX_DIGITS = 10
 
-
     fun add(firstNumber: Double, secondNumber: Double): Double {
         return (firstNumber + secondNumber)
     }
@@ -108,7 +107,6 @@ class CalculationRepo() : ViewModel() {
 
     }
 
-
     fun isOperator(ch: Char): Boolean {
         return ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '%'
     }
@@ -147,6 +145,30 @@ class CalculationRepo() : ViewModel() {
         } else {
             bd.toPlainString()
         }
+    }
+
+    fun removeLastItem(str: String): String {
+        return if (str.isNotEmpty()) str.dropLast(1) else str
+    }
+
+    fun checkLastItem(str: String): Boolean {
+        return str.isNotEmpty() && str.last() == '+' || str.last() == '-' || str.last() == '*' || str.last() == '/' || str.last() == '%' || str.last() == '='
+    }
+
+
+    fun isValidDecimal(str: String): Boolean {
+        if (str.isEmpty()) return true
+        if (str.count { it == '.' } == 1) return false
+        return str.matches(Regex("""^\d*\.?\d*$"""))
+    }
+
+    fun String.lastTwoNotSame(): Boolean =
+        this.length < 2 || this[this.lastIndex] != this[this.lastIndex - 1]
+
+
+    fun isSameAsLast(existing: String, newChar: String): Boolean {
+        val last = existing.lastOrNull() ?: return false // empty string → no match
+        return last == newChar[0]
     }
 }
 

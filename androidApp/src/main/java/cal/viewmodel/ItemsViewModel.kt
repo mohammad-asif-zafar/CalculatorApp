@@ -1,19 +1,24 @@
 package cal.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cal.constants.CalculatorKeys
+import cal.model.CalculatorKey
 import cal.repo.HistoryRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class  ItemsViewModel(
+class ItemsViewModel(
     private val repo: CalculationRepo = CalculationRepo(),
     private val historyRepository: HistoryRepository? = null
 ) : ViewModel() {
 
+    private val UiEvent = MutableLiveData("")
+    val _UiEvent: LiveData<String> = UiEvent
 
     private val _smallRes = MutableStateFlow("") // private mutable
     var smallRes: StateFlow<String> = _smallRes.asStateFlow() // public read-only
@@ -38,36 +43,42 @@ class  ItemsViewModel(
         f = false
         s = false
         op = false
-        println("IND-1A" + firstValue.value)
-        println("IND-1A--secondValue valaue " + secondValue.value)
-        println("IND-1A--currentOperator  " + currentOperator)
     }
 
-    fun buttonClickItem(item: String) {
-        println("BTN -> $item")
-        when (item) {
+    fun buttonClickItem(calculatorKey: CalculatorKey) {
+        println("BTN -> $calculatorKey.item")
+
+        when (calculatorKey.label) {
+
+            CalculatorKeys.SPECIAL_MODE -> {
+            }
 
             CalculatorKeys.MODE -> {
-                _largeRes.value += item
+                if (!repo.isSameAsLast(_largeRes.value, calculatorKey.label)) {
+                    _largeRes.value += calculatorKey.label
+                }
             }
 
             CalculatorKeys.ALL_CLEAR ->// AC
                 setTextField()
 
-            CalculatorKeys.DOT ->
-                _largeRes.value += item
+            CalculatorKeys.CLEAR_ITEM -> {
+                _largeRes.value = repo.removeLastItem(_largeRes.value)
+            }
+
+            CalculatorKeys.DOT -> {
+                if (repo.isValidDecimal(_largeRes.value)) {
+                    _largeRes.value += calculatorKey.label
+                }
+            }
 
             CalculatorKeys.EQUALS -> {  // =
-                val expression = _largeRes.value
-                    .let { expr ->
-                        // If user ended on an operator, trim it off before evaluation
-                        if (expr.isNotEmpty() && repo.isOperator(expr.last())) expr.dropLast(1) else expr
-                    }
-
+                val expression = _largeRes.value.let { expr ->
+                    if (expr.isNotEmpty() && repo.isOperator(expr.last())) expr.dropLast(1) else expr
+                }
                 val result = repo.formatResult(
-                    repo.performCalculationMultipleOperation(expression).toDouble()
+                    repo.performCalculationMultipleOperation(expression).toDouble() // precedence is not
                 )
-
                 _smallRes.value = expression
                 _largeRes.value = result
 
@@ -78,41 +89,29 @@ class  ItemsViewModel(
 
             // +,-,*,/
             CalculatorKeys.PLUS, CalculatorKeys.MINUS, CalculatorKeys.MULTIPLY, CalculatorKeys.DIVIDE -> {
-                _largeRes.value += item
-                op = true
-                f = false
-                s = true
-                println("op" + item)
-                println("+:firstvalue:" + firstValue.value + "-second:" + secondValue.value)
-
+                if (!repo.isSameAsLast(_largeRes.value, calculatorKey.label)) {
+                    _largeRes.value += calculatorKey.label
+                    op = true
+                    f = false
+                    s = true
+                }
             }
             // digits (0-9)
             else -> {
-                println("intial :firstvalue:" + firstValue.value + "-second:" + secondValue.value)
-                println("MAX-First" + repo.hasReachedMaxDigits(firstValue.value))
+
                 if (!f && !op) {
                     if (repo.hasReachedMaxDigits(firstValue.value)) {
-                        firstValue.value += item
-                        _largeRes.value += item
+                        firstValue.value += calculatorKey.label
+                        _largeRes.value += calculatorKey.label
                         println(_largeRes.value)
-                        println("after first item:firstvalue:" + firstValue.value + "-second:" + secondValue.value)
                     }
                 } else if (op && s && !f) {
                     if (repo.hasReachedMaxDigits(secondValue.value)) {
-                        println("IND--" + secondValue.value)
-                        secondValue.value += item
-                        _largeRes.value += item
-                        println("after second:firstvalue:" + firstValue.value + "-second:" + secondValue.value)
+                        secondValue.value += calculatorKey.label
+                        _largeRes.value += calculatorKey.label
                     }
                 }
             }
         }
     }
-
-    /*  fun addToHistory(expression: String, result: String) {
-          println("his "+expression+"r"+result)
-
-          val newItem = HistoryItem(expression, result)
-          _history.value = listOf(newItem) + _history.value  // add to top
-      }*/
 }
