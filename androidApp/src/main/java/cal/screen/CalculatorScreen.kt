@@ -1,5 +1,6 @@
 package cal.screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +10,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -21,19 +21,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
-import androidx.lifecycle.viewmodel.compose.viewModel
-import cal.ItemsViewModel
-import cal.SimpleLazyColumn
-import cal.components.CustomTextField
+import cal.viewmodel.ItemsViewModel
+import org.koin.androidx.compose.getViewModel
+import cal.lazy.SimpleLazyColumn
+import cal.components.CustomTextDisplay
 import cal.components.LocalImageExample
+import cal.model.CalculatorKeysList
 import com.hathway.kmm_basic_app.android.R
 
 
 @Composable
-fun CalScreens(modifier: Modifier = Modifier) {
+fun CalculatorScreen(onOpenHistory: () -> Unit) {
 
-    val viewModel = viewModel<ItemsViewModel>() // Explicit type
-    val res by viewModel.result.collectAsState()
+    val viewModel = getViewModel<ItemsViewModel>()
+    val smallRes by viewModel.smallRes.collectAsState()
+    val largeRes by viewModel.largeRes.collectAsState()
 
     Surface(
         color = MaterialTheme.colorScheme.background, modifier = Modifier.fillMaxSize()
@@ -45,10 +47,12 @@ fun CalScreens(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1.3f)
+                    .background(Color(0xFFFFFFFF))
             ) {
                 val (topBox, iconRef) = createRefs()
 
                 Box(modifier = Modifier
+                    .background(Color(0xFFFFFFFF))
                     .constrainAs(topBox) {
                         top.linkTo(parent.top)
                         bottom.linkTo(parent.bottom)
@@ -59,9 +63,9 @@ fun CalScreens(modifier: Modifier = Modifier) {
                     }
                     .fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
                     LocalImageExample(
-                        onClick = { },
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = stringResource(id = R.string.back),
+                        onClick = { onOpenHistory() },
+                        imageVector = Icons.Filled.HistoryEdu,
+                        contentDescription = stringResource(id = R.string.history),
                         tintColor = Color.Gray,
                         size = 24.dp,
                     )
@@ -70,34 +74,30 @@ fun CalScreens(modifier: Modifier = Modifier) {
 
             Box(
                 modifier = Modifier
-                    .weight(3.6f)
+                    .weight(3f)
+                    .background(Color(0xFFFFFFFF))
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center,
 
                 ) {//2nd box
-                CustomTextField(
-                    text = res.toString(),
-                    label = stringResource(id = R.string.empty_item),
-                    modifier = modifier.fillMaxSize(),
+                CustomTextDisplay(
+                    textSmall = smallRes.toString(), textLarge = largeRes.toString()
+                )
 
-                    )
             }
 
             Box(
                 modifier = Modifier
-                    .weight(5.1f)
+                    .weight(6f)
                     .padding(top = 10.dp, bottom = 10.dp)
-                    .fillMaxWidth(), contentAlignment = Alignment.Center
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
             ) {
-                SimpleLazyColumn(items = viewModel.itemData(), onClick = { clicked ->
-                    // println("IND-1A: $clicked")
-                    viewModel.buttonClickItem(clicked)
-
-                })
+                SimpleLazyColumn(
+                    items = CalculatorKeysList.keys, onKeyClick = { item ->
+                        viewModel.buttonClickItem(item.label)
+                    })
             }
-
-            println("value $res")
-            Text(text = res.toString())
 
         }
 
@@ -108,7 +108,10 @@ fun CalScreens(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun myD() {
-    CalScreens()
+private fun PreviewCalScreens() {
+    CustomTextDisplay(
+        textSmall = "1223", textLarge = "12331"
+    )
+
 }
 

@@ -24,18 +24,18 @@ fun LocalImageExample(
     modifier: Modifier = Modifier,
     imageVector: ImageVector = Icons.Default.Refresh,
     contentDescription: String,
-    tintColor:Color,
+    tintColor: Color,
     size: Dp
 ) {
     Icon(
         imageVector = imageVector,
         contentDescription = contentDescription.toString(),
         modifier = modifier
-            .padding(8.dp) // replace paddingStart with actual dp
+            .padding(8.dp)
             .height(size)
             .width(size)
-            .clickable { onClick() },   // ✅ clickable modifier
-        tint =tintColor // optional tint (you can style it)
+            .clickable { onClick() },
+        tint = tintColor
     )
 }
 
