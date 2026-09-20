@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.2"
 kotlin = "2.0.20"
+compose-multiplatform = "1.7.0"
 
 # Compose
 compose = "1.5.4"             # used for ui/foundation
@@ -9,9 +10,9 @@ compose-bom = "2024.09.01"    # BOM version, aligns Compose libs
 
 # AndroidX
 androidxActivity = "1.9.0"
-navigation = "2.7.7"
-lifecycle = "2.6.1"
-constraintlayout-compose = "1.0.1"
+navigation = "2.8.0-alpha10"
+lifecycle = "2.8.2"
+constraintlayout-compose = "2.2.0"
 
 # Misc
 foundationDesktop = "1.7.0"
@@ -21,8 +22,9 @@ kotlinx-coroutines = "1.7.3"
 # Testing
 junit = "4.13.2"
 junitJupiter = "5.8.1"
-koin = "3.5.6"
-room = "2.6.1"
+koin = "4.0.0-RC1"
+koinComposeMultiplatform = "4.0.0-RC1"
+room = "2.7.0-alpha11"
 
 # KAPT
 ksp = "2.0.20-1.0.24" # match your Kotlin 2.0.20
@@ -44,15 +46,16 @@ material-icons-extended = { module = "androidx.compose.material:material-icons-e
 
 # AndroidX
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayout-compose" }
+androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation" }
+lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-viewmodel-ktx = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+constraintlayout-compose = { module = "org.jetbrains.compose.constraintlayout:constraintlayout-compose-multiplatform", version.ref = "constraintlayout-compose" }
 
 # KOIN
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComposeMultiplatform" }
 # Desktop
 androidx-foundation-desktop = { module = "androidx.compose.foundation:foundation-desktop", version.ref = "foundationDesktop" }
 
@@ -78,5 +81,6 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+symbol-processing = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
 
     // KSP plugin (comes from libs.versions.toml)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.symbol.processing)
 }
 
 android {
@@ -70,7 +70,7 @@ dependencies {
     // Koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)
-    implementation(libs.koin.compose)
+    implementation(libs.koin.androidx.compose)
 
     // Room
     implementation(libs.room.runtime)
