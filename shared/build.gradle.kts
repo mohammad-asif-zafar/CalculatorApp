@@ -40,10 +40,11 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.navigation.compose)
             implementation(libs.lifecycle.viewmodel.compose)
-            implementation(libs.constraintlayout.compose)
             implementation(libs.room.runtime)
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(compose.materialIconsExtended)
         }
         androidMain.dependencies {
         }

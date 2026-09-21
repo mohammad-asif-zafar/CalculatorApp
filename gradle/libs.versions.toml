@@ -12,7 +12,6 @@ compose-bom = "2024.09.01"    # BOM version, aligns Compose libs
 androidxActivity = "1.9.0"
 navigation = "2.8.0-alpha10"
 lifecycle = "2.8.2"
-constraintlayout-compose = "2.2.0"
 
 # Misc
 foundationDesktop = "1.7.0"
@@ -48,14 +47,14 @@ material-icons-extended = { module = "androidx.compose.material:material-icons-e
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidxActivity" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
-lifecycle-viewmodel-ktx = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
-constraintlayout-compose = { module = "org.jetbrains.compose.constraintlayout:constraintlayout-compose-multiplatform", version.ref = "constraintlayout-compose" }
+lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 
 # KOIN
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComposeMultiplatform" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
 # Desktop
 androidx-foundation-desktop = { module = "androidx.compose.foundation:foundation-desktop", version.ref = "foundationDesktop" }
 

@@ -15,4 +15,7 @@ abstract class AppDatabase : RoomDatabase() {
     companion object
 }
 
-expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase>
+@Suppress("KotlinNoActualForExpect")
+expect object AppDatabaseConstructor : RoomDatabaseConstructor<AppDatabase> {
+    override fun initialize(): AppDatabase
+}

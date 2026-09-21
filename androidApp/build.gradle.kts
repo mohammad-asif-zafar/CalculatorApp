@@ -63,7 +63,6 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
 
     // Other UI
-    implementation(libs.constraintlayout.compose)
     implementation(libs.coil.compose)
     implementation(libs.material.icons.extended)
 
