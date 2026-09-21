@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.symbol.processing)
 }
 
 kotlin {
@@ -29,12 +32,33 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            //put your multiplatform dependencies here
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.lifecycle.viewmodel.compose)
+            implementation(libs.room.runtime)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(compose.materialIconsExtended)
+        }
+        androidMain.dependencies {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
 }
 
 android {
